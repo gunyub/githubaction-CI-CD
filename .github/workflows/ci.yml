@@ -1,0 +1,31 @@
+name: C Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: [self-hosted, Windows, X64]
+
+    steps:
+      - name: Download source code
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Build and run
+        shell: cmd
+        run: |
+          call "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars64.bat"
+          if errorlevel 1 exit /b 1
+          cl /nologo /W4 main.c /Fe:app.exe
+          if errorlevel 1 exit /b 1
+          app.exe
+          if errorlevel 1 exit /b 1
