@@ -2,6 +2,6 @@
 
 int main(void)
 {
-    printf("CI build test OK!\n");
+    printf("CI build test OK!\n")
     return 0;
 }
